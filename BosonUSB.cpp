@@ -207,7 +207,7 @@ int main(int argc, char** argv )
 				strcpy(video_frames_str, argv[i]+1);
                                 video_frames = atoi( video_frames_str );
                                 printf(WHT ">>> Number of frames to record =" YEL "%i" WHT "\n", video_frames);
-            		}	
+            		}
         	}
   	}
 
@@ -269,6 +269,7 @@ int main(int argc, char** argv )
 
 	} else { // 8- bits is always 640x512 (even for a Boson 320)
 		 printf(WHT ">>> " YEL "8 bits " WHT "YUV selected\n");
+                 // NOTE(martin): This pixel format is fourcc "YV12"
 	         format.fmt.pix.pixelformat = V4L2_PIX_FMT_YVU420; // thermal, works   LUMA, full Cr, full Cb
 		 width = 640;
 		 height = 512;
@@ -412,7 +413,7 @@ int main(int argc, char** argv )
 		// ---------------------------------
 		// DATA in YUV
 		else {  // Video is in 8 bits YUV
-            		cvtColor(thermal_luma, thermal_rgb, COLOR_YUV2RGB_I420, 0 );   // 4:2:0 family instead of 4:2:2 ...
+            		cvtColor(thermal_luma, thermal_rgb, COLOR_YUV2RGB_YV12, 0 );   // 4:2:0 family instead of 4:2:2 ...
 
         		sprintf(label, "%s : 8bits", thermal_sensor_name);
 		        imshow(label, thermal_rgb);
